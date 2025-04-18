@@ -1,5 +1,39 @@
-﻿using ScreenSound.Menus;
+﻿using ScreenSound.Banco;
+using ScreenSound.Menus;
 using ScreenSound.Modelos;
+
+try
+{
+    var context = new ScreenSoundContext();
+    var artista = new ArtistaDAL(context);
+    //artista.Adicionar(new Artista("Teste1", "Teste bio"));
+
+    //var listaArtista = artista.Listar();
+    //foreach (var item in listaArtista)
+    //{
+    //    Console.WriteLine($"Id: {item.Id}\nNome: {item.Nome}\nBio: {item.Bio}");
+    //}
+    //var artistaAtualizado = new Artista("Teste1", "Teste bio atualizado") { Id = 1003 };
+    //artista.Atualizar(artistaAtualizado);
+    //var listaArtista = artista.Listar();
+    //foreach (var item in listaArtista)
+    //{
+    //    Console.WriteLine($"Id: {item.Id}\nNome: {item.Nome}\nBio: {item.Bio}");
+    //}
+    //artista.Deletar(artistaAtualizado);
+
+    //listaArtista = artista.Listar();
+    //foreach (var item in listaArtista)
+    //{
+    //    Console.WriteLine($"Id: {item.Id}\nNome: {item.Nome}\nBio: {item.Bio}");
+    //}
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Erro ao conectar ao banco de dados: {ex.Message}");
+}
+
+return;
 
 Artista ira = new Artista("Ira!", "Banda Ira!");
 Artista beatles = new("The Beatles", "Banda The Beatles");
