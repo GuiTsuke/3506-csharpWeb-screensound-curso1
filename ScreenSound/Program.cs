@@ -2,45 +2,8 @@
 using ScreenSound.Menus;
 using ScreenSound.Modelos;
 
-try
-{
-    var context = new ScreenSoundContext();
-    var artista = new ArtistaDAL(context);
-    //artista.Adicionar(new Artista("Teste1", "Teste bio"));
-
-    //var listaArtista = artista.Listar();
-    //foreach (var item in listaArtista)
-    //{
-    //    Console.WriteLine($"Id: {item.Id}\nNome: {item.Nome}\nBio: {item.Bio}");
-    //}
-    //var artistaAtualizado = new Artista("Teste1", "Teste bio atualizado") { Id = 1003 };
-    //artista.Atualizar(artistaAtualizado);
-    //var listaArtista = artista.Listar();
-    //foreach (var item in listaArtista)
-    //{
-    //    Console.WriteLine($"Id: {item.Id}\nNome: {item.Nome}\nBio: {item.Bio}");
-    //}
-    //artista.Deletar(artistaAtualizado);
-
-    //listaArtista = artista.Listar();
-    //foreach (var item in listaArtista)
-    //{
-    //    Console.WriteLine($"Id: {item.Id}\nNome: {item.Nome}\nBio: {item.Bio}");
-    //}
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Erro ao conectar ao banco de dados: {ex.Message}");
-}
-
-return;
-
-Artista ira = new Artista("Ira!", "Banda Ira!");
-Artista beatles = new("The Beatles", "Banda The Beatles");
-
-Dictionary<string, Artista> artistasRegistrados = new();
-artistasRegistrados.Add(ira.Nome, ira);
-artistasRegistrados.Add(beatles.Nome, beatles);
+var context = new ScreenSoundContext();
+DAL<Artista> artistaDAL = new(context);
 
 Dictionary<int, Menu> opcoes = new();
 opcoes.Add(1, new MenuRegistrarArtista());
@@ -79,7 +42,7 @@ void ExibirOpcoesDoMenu()
     if (opcoes.ContainsKey(opcaoEscolhidaNumerica))
     {
         Menu menuASerExibido = opcoes[opcaoEscolhidaNumerica];
-        menuASerExibido.Executar(artistasRegistrados);
+        menuASerExibido.Executar(artistaDAL);
         if (opcaoEscolhidaNumerica > 0) ExibirOpcoesDoMenu();
     } 
     else
