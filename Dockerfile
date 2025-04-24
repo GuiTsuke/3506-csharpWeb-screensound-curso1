@@ -1,29 +1,35 @@
-﻿# Etapa 1: build
+﻿# Etapa base: imagem para rodar a aplicação
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+WORKDIR /app
+
+# Expor a porta 80 (padrão para APIs no Render)
+EXPOSE 80
+
+# Etapa build: imagem para compilar e publicar a aplicação
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copiar o arquivo de solução e restaurar dependências
-COPY . .
-RUN dotnet restore "./ScreenSound.sln"
+COPY ScreenSound.sln ./
+COPY ScreenSound.API/ScreenSound.API.csproj ./ScreenSound.API/
+COPY ScreenSound.Shared.Data/ScreenSound.Shared.Data.csproj ./ScreenSound.Shared.Data/
+COPY ScreenSound.Shared.Models/ScreenSound.Shared.Models.csproj ./ScreenSound.Shared.Models/
 
-# Compilar e publicar
-RUN dotnet publish "./ScreenSound.API/ScreenSound.API.csproj" -c Release -o /src/ScreenSound.API/bin/Release/net8.0/publish
+RUN dotnet restore
 
-# Etapa 2: runtime
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+# Copiar o restante dos arquivos do projeto
+COPY . ./
+
+# Publicar a aplicação no diretório de saída
+WORKDIR /src/ScreenSound.API
+RUN dotnet publish -c Release -o /app/publish
+
+# Etapa runtime: imagem para rodar a aplicação
+FROM base AS runtime
 WORKDIR /app
 
-# Copiar os arquivos publicados
-COPY --from=build /src/ScreenSound.API/bin/Release/net8.0/publish /app/publish
+# Copiar os arquivos publicados da etapa anterior
+COPY --from=build /app/publish .
 
-# Listar arquivos para diagnóstico
-RUN ls -la /app/publish
-
-# Expor a porta 80
-EXPOSE 80
-
-# Garantir permissões de execução
-RUN chmod +x /app/publish/ScreenSound.API.dll
-
-# Comando para iniciar a aplicação
-ENTRYPOINT ["dotnet", "/app/publish/ScreenSound.API.dll"]
+# Comando para rodar a aplicação
+ENTRYPOINT ["dotnet", "ScreenSound.API.dll"]

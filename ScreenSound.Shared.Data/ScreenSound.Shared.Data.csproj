@@ -6,10 +6,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ScreenSound.Shared\ScreenSound.Shared.Models.csproj" />
-  </ItemGroup>
-
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
 			<PrivateAssets>all</PrivateAssets>
@@ -27,5 +23,9 @@
 
 	<ItemGroup>
 	  <Folder Include="Migrations\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ScreenSound.Shared.Models\ScreenSound.Shared.Models.csproj" />
 	</ItemGroup>
 </Project>

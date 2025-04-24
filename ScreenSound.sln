@@ -5,11 +5,11 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreenSound", "ScreenSound\ScreenSound.csproj", "{A9CCE41C-6657-42BF-AED4-F3F578033037}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenSound.Shared.Models", "ScreenSound.Shared\ScreenSound.Shared.Models.csproj", "{F1079FCC-50F5-48B6-8805-5AC907F32235}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenSound.Shared.Data", "ScreenSound.Shared.Data\ScreenSound.Shared.Data.csproj", "{37B60975-FF7C-4364-A36D-F97632024C6D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenSound.API", "ScreenSound.API\ScreenSound.API.csproj", "{BEB46700-BE96-5A99-74A4-F264C731A68A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenSound.Shared.Models", "ScreenSound.Shared.Models\ScreenSound.Shared.Models.csproj", "{CAD9FB56-858B-67C1-9316-FFC4FF49D7E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		{A9CCE41C-6657-42BF-AED4-F3F578033037}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9CCE41C-6657-42BF-AED4-F3F578033037}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9CCE41C-6657-42BF-AED4-F3F578033037}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F1079FCC-50F5-48B6-8805-5AC907F32235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1079FCC-50F5-48B6-8805-5AC907F32235}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1079FCC-50F5-48B6-8805-5AC907F32235}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1079FCC-50F5-48B6-8805-5AC907F32235}.Release|Any CPU.Build.0 = Release|Any CPU
 		{37B60975-FF7C-4364-A36D-F97632024C6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{37B60975-FF7C-4364-A36D-F97632024C6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37B60975-FF7C-4364-A36D-F97632024C6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{BEB46700-BE96-5A99-74A4-F264C731A68A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEB46700-BE96-5A99-74A4-F264C731A68A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEB46700-BE96-5A99-74A4-F264C731A68A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAD9FB56-858B-67C1-9316-FFC4FF49D7E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAD9FB56-858B-67C1-9316-FFC4FF49D7E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAD9FB56-858B-67C1-9316-FFC4FF49D7E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAD9FB56-858B-67C1-9316-FFC4FF49D7E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
