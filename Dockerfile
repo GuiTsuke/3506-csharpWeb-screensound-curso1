@@ -1,24 +1,13 @@
-# Etapa 1: Build do projeto
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
-
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+﻿# Etapa 1: build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["ScreenSound.API/ScreenSound.API.csproj", "ScreenSound.API/"]
-COPY ["ScreenSound.Shared/ScreenSound.Shared.csproj", "ScreenSound.Shared/"]
-RUN dotnet restore "ScreenSound.API/ScreenSound.API.csproj"
 COPY . .
-WORKDIR "/src/ScreenSound.API"
-RUN dotnet build "ScreenSound.API.csproj" -c Release -o /app/build
+RUN dotnet restore "ScreenSound.sln"
+RUN dotnet publish "ScreenSound.API/ScreenSound.API.csproj" -c Release -o /app/publish
 
-# Etapa 2: Publish
-FROM build AS publish
-RUN dotnet publish "ScreenSound.API.csproj" -c Release -o /app/publish
-
-# Etapa 3: Rodar o aplicativo
-FROM base AS final
+# Etapa 2: runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build /app/publish .
+EXPOSE 10000
 ENTRYPOINT ["dotnet", "ScreenSound.API.dll"]
