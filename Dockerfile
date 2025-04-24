@@ -6,16 +6,19 @@ WORKDIR /src
 COPY . .
 RUN dotnet restore "./ScreenSound.sln"
 
-# Build
-RUN dotnet publish "./ScreenSound.API/ScreenSound.API.csproj" -c Release -o /app/publish
+# Verificar se o build da API está sendo feito corretamente
+RUN dotnet build "./ScreenSound.API/ScreenSound.API.csproj" -c Release
+
+# Build e publicação
+RUN dotnet publish "./ScreenSound.API/ScreenSound.API.csproj" -c Release -o /src/ScreenSound.API/bin/Release/net8.0/publish
 
 # Etapa 2: runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
-COPY --from=build /app/publish .
+COPY --from=build /src/ScreenSound.API/bin/Release/net8.0/publish /app/publish
 
 # Expor a porta 80 (padrão para APIs no Render)
 EXPOSE 80
 
-# Comando para iniciar a aplicação (certificando-se de que o arquivo .dll está no caminho correto)
-CMD ["dotnet", "/app/ScreenSound.API.dll"]
+# Comando para iniciar a aplicação
+ENTRYPOINT ["dotnet", "ScreenSound.API.dll"]
