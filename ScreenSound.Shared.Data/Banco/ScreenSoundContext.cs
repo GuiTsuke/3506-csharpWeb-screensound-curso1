@@ -5,7 +5,7 @@ namespace ScreenSound.Shared.Banco;
 
 public class ScreenSoundContext : DbContext
 {
-    private string connectionString = "Host=localhost;Port=5432;Username=postgres;Password=123456;Database=ScreenSound;";
+    private string connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
 
     public DbSet<Artista> Artistas{ get; set; }
     public DbSet<Musica> Musicas{ get; set; }
@@ -13,6 +13,11 @@ public class ScreenSoundContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        if (string.IsNullOrEmpty(connectionString))
+        {
+            throw new InvalidOperationException("Connection string not found.");
+        }
+
         optionsBuilder
             .UseNpgsql(connectionString)
             .UseLazyLoadingProxies();
