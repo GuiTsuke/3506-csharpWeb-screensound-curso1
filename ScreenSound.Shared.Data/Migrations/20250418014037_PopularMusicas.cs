@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace ScreenSound.Migrations
+namespace ScreenSound.Shared.Migrations
 {
     /// <inheritdoc />
     public partial class PopularMusicas : Migration
@@ -10,7 +10,7 @@ namespace ScreenSound.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("UPDATE Musicas SET ArtistasId = 1 WHERE MusicaId = 1");
+            
         }
 
         /// <inheritdoc />

@@ -1,21 +1,30 @@
-﻿using System.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using ScreenSound.Modelos;
+﻿using Microsoft.EntityFrameworkCore;
+using ScreenSound.Shared.Models;
 
-namespace ScreenSound.Banco;
+namespace ScreenSound.Shared.Banco;
 
-internal class ScreenSoundContext : DbContext
+public class ScreenSoundContext : DbContext
 {
     private string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ScreenSoundV0;Integrated Security=True";
 
     public DbSet<Artista> Artistas{ get; set; }
     public DbSet<Musica> Musicas{ get; set; }
+    public DbSet<Genero> Generos{ get; set; }
+
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder
             .UseSqlServer(connectionString)
-            .UseLazyLoadingProxies();
+            .UseLazyLoadingProxies(false);
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Musica>()
+            .HasMany(c => c.Generos)
+            .WithMany(c => c.Musicas);
     }
     //public SqlConnection ObterConexão()
     //{

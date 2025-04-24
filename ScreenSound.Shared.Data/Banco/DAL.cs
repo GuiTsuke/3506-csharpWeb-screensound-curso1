@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ScreenSound.Modelos;
+using ScreenSound.Shared.Models;
 
-namespace ScreenSound.Banco;
+namespace ScreenSound.Shared.Banco;
 
-internal class DAL<T> where T : class
+public class DAL<T> where T : class
 {
-    protected readonly ScreenSoundContext _context;
+    private readonly ScreenSoundContext _context;
 
     public DAL(ScreenSoundContext context)
     {

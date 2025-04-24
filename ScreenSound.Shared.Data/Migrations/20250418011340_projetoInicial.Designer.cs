@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ScreenSound.Banco;
+using ScreenSound.Shared.Banco;
 
 #nullable disable
 
-namespace ScreenSound.Migrations
+namespace ScreenSound.Shared.Migrations
 {
     [DbContext(typeof(ScreenSoundContext))]
-    [Migration("20250418013348_AdicionarColunaAnoLancamento")]
-    partial class AdicionarColunaAnoLancamento
+    [Migration("20250418011340_projetoInicial")]
+    partial class projetoInicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,9 +56,6 @@ namespace ScreenSound.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("AnoLancamento")
-                        .HasColumnType("int");
 
                     b.Property<string>("Nome")
                         .IsRequired()

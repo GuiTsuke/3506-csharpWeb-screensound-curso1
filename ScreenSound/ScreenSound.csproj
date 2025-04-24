@@ -25,4 +25,9 @@
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ScreenSound.Shared.Data\ScreenSound.Shared.Data.csproj" />
+    <ProjectReference Include="..\ScreenSound.Shared\ScreenSound.Shared.Models.csproj" />
+  </ItemGroup>
+
 </Project>

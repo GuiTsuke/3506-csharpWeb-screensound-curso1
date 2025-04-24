@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ScreenSound.Banco;
+using ScreenSound.Shared.Banco;
 
 #nullable disable
 
-namespace ScreenSound.Migrations
+namespace ScreenSound.Shared.Migrations
 {
     [DbContext(typeof(ScreenSoundContext))]
-    [Migration("20250418013915_RelacionarArtistaMusica")]
-    partial class RelacionarArtistaMusica
+    [Migration("20250418012703_PopularTabela")]
+    partial class PopularTabela
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,35 +57,13 @@ namespace ScreenSound.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AnoLancamento")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ArtistaId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArtistaId");
-
                     b.ToTable("Musicas");
-                });
-
-            modelBuilder.Entity("ScreenSound.Modelos.Musica", b =>
-                {
-                    b.HasOne("ScreenSound.Modelos.Artista", "Artista")
-                        .WithMany("Musicas")
-                        .HasForeignKey("ArtistaId");
-
-                    b.Navigation("Artista");
-                });
-
-            modelBuilder.Entity("ScreenSound.Modelos.Artista", b =>
-                {
-                    b.Navigation("Musicas");
                 });
 #pragma warning restore 612, 618
         }

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace ScreenSound.Migrations
+namespace ScreenSound.Shared.Migrations
 {
     /// <inheritdoc />
     public partial class RelacionarArtistaMusica : Migration
