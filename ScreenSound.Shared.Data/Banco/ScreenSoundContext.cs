@@ -5,7 +5,14 @@ namespace ScreenSound.Shared.Banco;
 
 public class ScreenSoundContext : DbContext
 {
-    private string connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
+    public ScreenSoundContext()
+    {
+    }
+
+    public ScreenSoundContext(DbContextOptions options) : base(options)
+    {
+    }
+
 
     public DbSet<Artista> Artistas{ get; set; }
     public DbSet<Musica> Musicas{ get; set; }
@@ -13,14 +20,10 @@ public class ScreenSoundContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (string.IsNullOrEmpty(connectionString))
+        if (optionsBuilder.IsConfigured)
         {
-            throw new InvalidOperationException("Connection string not found.");
+            return;
         }
-
-        optionsBuilder
-            .UseNpgsql(connectionString)
-            .UseLazyLoadingProxies();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
