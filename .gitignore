@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/ScreenSound.API/appsettings.json
+/ScreenSound.API/appsettings.Development.json
+/ScreenSound.API/appsettings.Production.json
+/ScreenSound.API/appsettings.Production.json
+/ScreenSound.API/appsettings.Production.Development.json
