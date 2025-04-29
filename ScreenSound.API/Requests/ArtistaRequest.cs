@@ -2,5 +2,5 @@
 
 namespace ScreenSound.API.Requests
 {
-    public record ArtistaRequest([Required]string Nome, [Required] string Bio);
+    public record ArtistaRequest([Required] string nome, [Required] string bio, string? fotoPerfil);
 }

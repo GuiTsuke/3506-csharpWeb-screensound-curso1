@@ -1,0 +1,45 @@
+﻿@inherits MudDialog
+@inject IDialogService DialogService
+
+<MudDialog>
+	<TitleContent>
+		<MudText Typo="Typo.h6">@TitleText</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1">@ContentText</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close" Color="@Color" Variant="Variant.Filled">@ButtonText</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+    [Parameter] public string ContentText { get; set; } = string.Empty;
+    [Parameter] public string ButtonText { get; set; } = "OK";
+    [Parameter] public Color Color { get; set; } = Color.Default;
+    [Parameter] public string TitleText { get; set; } = "Atenção";
+
+    private void Close() => MudDialog.Close();
+
+
+	private async Task MostrarAlerta()
+	{
+		var parameters = new DialogParameters
+	{
+		{ "ContentText", "Preencha todos os campos corretamente antes de continuar." },
+		{ "ButtonText", "Fechar" },
+		{ "Color", Color.Error },
+		{ "TitleText", "Erro de Validação"  }
+	};
+
+		var options = new DialogOptions { CloseOnEscapeKey = true };
+		var dialog = await DialogService.ShowAsync<AlertaDialog>("", parameters, options);
+		var result = await dialog.Result;
+
+		//result.Canceled
+		//result.Data
+	}
+}
+
+

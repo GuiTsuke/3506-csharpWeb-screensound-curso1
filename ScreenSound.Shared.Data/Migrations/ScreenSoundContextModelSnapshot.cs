@@ -17,6 +17,9 @@ namespace ScreenSound.Shared.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -48,7 +51,6 @@ namespace ScreenSound.Shared.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("FotoPerfil")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Nome")
@@ -86,7 +88,7 @@ namespace ScreenSound.Shared.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AnoLancamento")
+                    b.Property<int>("AnoLancamento")
                         .HasColumnType("integer");
 
                     b.Property<int?>("ArtistaId")

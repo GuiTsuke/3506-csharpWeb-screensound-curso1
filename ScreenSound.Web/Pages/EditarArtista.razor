@@ -1,0 +1,130 @@
+﻿@page "/EditarArtista/{NomeArtista}"
+@inject ArtistaAPI artistaAPI;
+@inject NavigationManager navigationManager;
+@inject ISnackbar snackbar;
+
+
+<MudPaper Class="px-8 pt-2 pb-4 mx-12 my-8" Justify="Justify.Center">
+	<MudText Class="mt-8" Typo="Typo.h4">Edição de Artista: Id @id</MudText>
+	<MudForm @ref="form">
+		<MudTextField @bind-Value="nome" Class="mt-4" T="string" Placeholder="Nome do Artista" Variant="Variant.Outlined" Required="true" RequiredError="Campo Obrigatório." />
+		<MudTextField @bind-Value="biografia" Class="mt-4" T="string" Placeholder="Biografia do Artista" Variant="Variant.Outlined" Lines="4" Required="true" RequiredError="Campo Obrigatório." />
+
+
+		@if (carregado)
+		{
+			<MudImage Src="@ObterCaminhoImagem()" Alt="Imagem enviada" Height="200" Width="200" Class="mt-4 mb-4" />
+		}
+		else
+		{
+			<MudSkeleton Height="200px" Width="200px" Class="mt-4 mb-4" />
+		}
+
+		<MudFileUpload T="IBrowserFile" Accept=".jpeg, .jpg" FilesChanged="UploadFile">
+			<ActivatorContent>
+				<MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.PhotoCamera">
+					Foto de Perfil
+				</MudButton>
+			</ActivatorContent>
+		</MudFileUpload>
+
+		<div class="d-flex align-center justify-end gap-2 mt-4">
+			<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="Editar">Salvar</MudButton>
+			<MudButton Variant="Variant.Filled" Color="Color.Error" @onclick="Deletar">Deletar</MudButton>
+			<MudButton Variant="Variant.Filled" Color="Color.Transparent" @onclick="Voltar">Voltar</MudButton>
+		</div>
+	</MudForm>
+</MudPaper>
+
+@code {
+	[Parameter]
+	public string? NomeArtista { get; set; }
+
+	private MudForm? form;
+	private string? nome;
+	private string? biografia;
+	private int? id;
+	private string? fileImage;
+	private string? fotoPerfil;
+	private string? pathFotoPerfil;
+	private bool carregado = false;
+
+	public ArtistaResponse? Artista { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		Artista = await artistaAPI.GetArtistaPorNomeAsync(NomeArtista!);
+		nome = Artista!.Nome;
+		biografia = Artista!.Bio;
+		id = Artista!.Id;
+		pathFotoPerfil = Artista!.FotoPerfil;
+
+		carregado = true;
+	}
+
+	private async Task Deletar()
+	{
+		await form!.Validate();
+
+		if (!form.IsValid)
+		{
+			snackbar.Add("Preencha todos os campos obrigatórios corretamente!", Severity.Error);
+			return;
+		}
+
+		await artistaAPI.DeleteArtistaAsync(Artista!.Id);
+		navigationManager.NavigateTo("/Artistas");
+	}
+
+	private async Task Editar()
+	{
+		await form!.Validate();
+
+		if (!form.IsValid)
+		{
+			snackbar.Add("Preencha todos os campos obrigatórios corretamente!", Severity.Error);
+			return;
+		}
+
+		var requestEdit = new ArtistaRequestEdit(Artista!.Id, nome!, biografia!, fotoPerfil);
+		await artistaAPI.UpdateArtistaAsync(requestEdit);
+		navigationManager.NavigateTo("/Artistas");
+	}
+
+	private async Task UploadFile(IBrowserFile file)
+	{
+		long maxFileSize = 1024 * 1024 * 15; // 15 MB
+
+		if (file.Size > maxFileSize)
+		{
+			snackbar.Add("Arquivo muito grande! Tamanho máximo: 15MB.", Severity.Error);
+			return;
+		}
+
+		var format = "image/jpeg";
+		var resizedImage = await file.RequestImageFileAsync(format, 200, 200);
+
+		using var fileStream = resizedImage.OpenReadStream(maxFileSize);
+		using var memoryStream = new MemoryStream();
+		await fileStream.CopyToAsync(memoryStream);
+
+		var imageUpload = Convert.ToBase64String(memoryStream.ToArray());
+		fileImage = $"data:{format};base64,{imageUpload}";
+		fotoPerfil = imageUpload;
+
+	}
+
+	private string ObterCaminhoImagem()
+	{
+		if (!string.IsNullOrEmpty(fileImage))
+			return fileImage; // preview do upload novo
+		if (!string.IsNullOrEmpty(pathFotoPerfil))
+			return $"https://localhost:7265{pathFotoPerfil}"; // imagem salva no servidor
+		return "images/cardArtista.png"; // ou uma imagem padrão
+	}
+
+	private void Voltar()
+	{
+		navigationManager.NavigateTo("/Artistas");
+	}
+}

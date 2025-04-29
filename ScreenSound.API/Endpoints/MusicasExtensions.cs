@@ -36,7 +36,7 @@ public static class MusicasExtensions
             {
                 ArtistaId = musicaRequest.ArtistaId,
                 AnoLancamento = musicaRequest.AnoLancamento,
-                Generos = musicaRequest.Generos is not null? GeneroRequestConverter(musicaRequest.Generos): [],
+                Generos = musicaRequest.Generos is not null? GeneroRequestConverter(musicaRequest.Generos, dalGenero): [],
             };
             dal.Adicionar(musica);
             return Results.Ok();
@@ -51,7 +51,7 @@ public static class MusicasExtensions
             return Results.NoContent();
         });
 
-        app.MapPut("/Musicas", ([FromServices] DAL<Musica> dal, [FromBody] MusicaRequestEdit musica) =>
+        app.MapPut("/Musicas", ([FromServices] DAL<Musica> dal, [FromServices] DAL < Genero > dalGenero, [FromBody] MusicaRequestEdit musica) =>
         {
             var musicaBuscada = dal.ListarPor(a => a.Id.Equals(musica.Id));
             if (musicaBuscada is null)
@@ -59,6 +59,17 @@ public static class MusicasExtensions
 
             musicaBuscada.Nome = musica.Nome;
             musicaBuscada.AnoLancamento = musica.AnoLancamento;
+            musicaBuscada.ArtistaId = musica.ArtistaId;
+
+            musicaBuscada.Generos?.Clear();
+            if(musica.Generos is not null)
+            {
+                var novosGeneros = GeneroRequestConverter(musica.Generos, dalGenero);
+                foreach(var genero in novosGeneros)
+                {
+                    musicaBuscada.Generos?.Add(genero);
+                }
+            }            
 
             dal.Atualizar(musicaBuscada);
             return Results.Ok();
@@ -72,12 +83,37 @@ public static class MusicasExtensions
 
     private static MusicaResponse EntityToResponse(Musica musica)
     {
-        return new MusicaResponse(musica.Id, musica.Nome!, musica.Artista!.Id, musica.Artista.Nome!);
+        return new MusicaResponse(musica.Id, musica.Nome!, musica.Artista!.Id, musica.Artista.Nome!, musica.AnoLancamento, musica.Artista.FotoPerfil!, [.. musica.Generos!.Select(g => g.Id)]);
     }
 
-    private static ICollection<Genero> GeneroRequestConverter(ICollection<GeneroRequest> generos)
+    private static ICollection<Genero> GeneroRequestConverter(ICollection<GeneroRequest> generos, DAL<Genero> dalGenero)
     {
-        return generos.Select(g => RequestToEntity(g)).ToList();
+        var listaDeGeneros = new List<Genero>();
+        foreach (var item in generos)
+        {
+            var genero = dalGenero.ListarPor(g => g.Nome.ToUpper().Equals(item.Nome.ToUpper()));
+            Genero generoAdicionado;
+
+            
+            if (genero is not null)
+            {
+                generoAdicionado = genero;
+            }
+            else
+            {
+                generoAdicionado = new Genero()
+                {
+                    Nome = item.Nome,
+                    Descricao = item.Descricao
+                };
+            }
+            if(!listaDeGeneros.Any(g => g.Nome.ToUpper() == generoAdicionado.Nome!.ToUpper()))
+            {
+                listaDeGeneros.Add(generoAdicionado);
+            }
+        }
+
+        return listaDeGeneros;
     }
 
     private static Genero RequestToEntity(GeneroRequest genero)

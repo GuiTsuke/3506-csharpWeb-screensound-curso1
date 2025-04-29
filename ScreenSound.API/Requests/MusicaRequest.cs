@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ScreenSound.Shared.Models;
 
 namespace ScreenSound.API.Requests
 {

@@ -1,17 +1,23 @@
-using System.Data.SqlTypes;
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using ScreenSound.API.Endpoints;
 using ScreenSound.Shared.Banco;
 using ScreenSound.Shared.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirFrontend", policy =>
+    {
+        policy.WithOrigins("https://localhost:7274")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddDbContext<ScreenSoundContext>((options) =>
 {
-    var connection = builder.Configuration.GetConnectionString("DefaultConnection");
     options
     .UseNpgsql(builder.Configuration["ConnectionStrings:DefaultConnection"])
     .UseLazyLoadingProxies();
@@ -27,6 +33,16 @@ builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =
 
 var app = builder.Build();
 app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
+
+app.UseCors(options =>
+{
+    options.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+});
+
+app.UseStaticFiles();
+
 app.AddEndpointsArtistas();
 app.AddEndpointsMusicas();
 app.AddEndpointsGeneros();

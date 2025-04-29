@@ -1,0 +1,79 @@
+﻿@page "/CadastrarArtista"
+@inject ArtistaAPI artistaAPI;
+@inject NavigationManager navigationManager;
+@inject ISnackbar snackbar;
+
+
+<MudPaper Class="px-8 pt-2 pb-4 mx-12 my-8" Justify="Justify.Center">
+	<MudText Class="mt-8" Typo="Typo.h4">Cadastro do Artista</MudText>
+	<MudForm @ref="form">
+		<MudTextField @bind-Value="nome" Class="mt-4" T="string" Placeholder="Nome do Artista" Variant="Variant.Outlined" Required="true" RequiredError="Campo Obrigatório." />
+		<MudTextField @bind-Value="biografia" Class="mt-4" T="string" Placeholder="Biografia do Artista" Variant="Variant.Outlined" Lines="4" Required="true" RequiredError="Campo Obrigatório." />
+
+		<MudImage Src="@fileImage" Alt="Imagem de perfil selecionada" Height="200" Width="200" class="mt-4 mb-4"/>
+		<MudFileUpload T="IBrowserFile" Accept=".jpeg, .jpg" FilesChanged="UploadFile">
+			<ActivatorContent>
+				<MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.PhotoCamera">
+					Foto de Perfil
+				</MudButton>
+			</ActivatorContent>
+		</MudFileUpload>
+
+		<div class="d-flex align-center justify-end gap-2 mt-4">
+			<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="Cadastrar">Cadastrar</MudButton>
+			<MudButton Variant="Variant.Filled" Color="Color.Transparent" @onclick="Voltar">Voltar</MudButton>
+		</div>
+	</MudForm>
+</MudPaper>
+
+@code {
+	private MudForm? form;
+	private string? nome;
+	private string? biografia;
+
+	private string? fileImage;
+	private string? fotoPerfil;
+
+	private async Task Cadastrar()
+	{
+		await form!.Validate();
+
+		if (!form.IsValid)
+		{
+			snackbar.Add("Preencha todos os campos obrigatórios corretamente!", Severity.Error);
+			return;
+		}
+
+		var request = new ArtistaRequest(nome!, biografia!, fotoPerfil);
+		await artistaAPI.AddArtistaAsync(request);
+		navigationManager.NavigateTo("/Artistas");
+	}
+
+	private void Voltar()
+	{
+		navigationManager.NavigateTo("/Artistas");
+	}
+
+	private async Task UploadFile(IBrowserFile file)
+	{
+		long maxFileSize = 1024 * 1024 * 15; // 15 MB
+
+		if (file.Size > maxFileSize)
+		{
+			snackbar.Add("Arquivo muito grande! Tamanho máximo: 15MB.", Severity.Error);
+			return;
+		}
+
+		var format = "image/jpeg";
+		var resizedImage = await file.RequestImageFileAsync(format, 200, 200);
+
+		using var fileStream = resizedImage.OpenReadStream(maxFileSize);
+		using var memoryStream = new MemoryStream();
+		await fileStream.CopyToAsync(memoryStream);
+
+		var imageUpload = Convert.ToBase64String(memoryStream.ToArray());
+		fileImage = $"data:{format};base64,{imageUpload}";
+		fotoPerfil = imageUpload;
+
+	}
+}

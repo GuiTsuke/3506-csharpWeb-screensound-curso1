@@ -11,10 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenSound.API", "ScreenSo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenSound.Shared.Models", "ScreenSound.Shared.Models\ScreenSound.Shared.Models.csproj", "{CAD9FB56-858B-67C1-9316-FFC4FF49D7E1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
-	ProjectSection(SolutionItems) = preProject
-		Dockerfile = Dockerfile
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenSound.Web", "ScreenSound.Web\ScreenSound.Web.csproj", "{055506A4-1B77-4233-ADD5-1A380A4B8697}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +35,10 @@ Global
 		{CAD9FB56-858B-67C1-9316-FFC4FF49D7E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAD9FB56-858B-67C1-9316-FFC4FF49D7E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAD9FB56-858B-67C1-9316-FFC4FF49D7E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{055506A4-1B77-4233-ADD5-1A380A4B8697}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{055506A4-1B77-4233-ADD5-1A380A4B8697}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{055506A4-1B77-4233-ADD5-1A380A4B8697}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{055506A4-1B77-4233-ADD5-1A380A4B8697}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

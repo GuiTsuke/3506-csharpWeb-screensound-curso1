@@ -16,7 +16,7 @@ public static class GenerosExtensions
             if (listaGeneros is null)
                 return Results.NotFound("Nenhum gênero encontrado!");
 
-            var listaGenerosResponse = EntitListToResponseList(listaGeneros);
+            var listaGenerosResponse = EntityListToResponseList(listaGeneros);
             return Results.Ok(listaGenerosResponse);
         });
 
@@ -54,7 +54,7 @@ public static class GenerosExtensions
         };
     }
 
-    private static ICollection<GeneroResponse> EntitListToResponseList(IEnumerable<Genero> listaGeneros)
+    private static ICollection<GeneroResponse> EntityListToResponseList(IEnumerable<Genero> listaGeneros)
     {
         return listaGeneros.Select(g => EntityToResponse(g)).ToList();
     }
