@@ -119,7 +119,7 @@
 		if (!string.IsNullOrEmpty(fileImage))
 			return fileImage; // preview do upload novo
 		if (!string.IsNullOrEmpty(pathFotoPerfil))
-			return $"https://localhost:7265{pathFotoPerfil}"; // imagem salva no servidor
+			return $"{Constantes.ENDPOINT_API}{pathFotoPerfil}"; // imagem salva no servidor
 		return "images/cardArtista.png"; // ou uma imagem padrão
 	}
 

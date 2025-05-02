@@ -21,6 +21,6 @@
 
 	protected override void OnParametersSet()
 	{
-		Imagem = Artista!.FotoPerfil!.Contains("Foto") ? $"https://localhost:7265/{Artista!.FotoPerfil}" : "images/cardArista.png";
+		Imagem = Artista!.FotoPerfil!.Contains("Foto") ? $"{Constantes.ENDPOINT_API}{Artista!.FotoPerfil}" : "images/cardArista.png";
 	}
 }

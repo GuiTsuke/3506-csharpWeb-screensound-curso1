@@ -21,6 +21,6 @@
 
     protected override void OnParametersSet()
     {
-        Imagem = Musica!.FotoArtista!.Contains("Foto") ? $"https://localhost:7265/{Musica!.FotoArtista}" : "images/cardArtista.png";
+        Imagem = Musica!.FotoArtista!.Contains("Foto") ? $"{Constantes.ENDPOINT_API}{Musica!.FotoArtista}" : "images/cardArtista.png";
     }
 }
