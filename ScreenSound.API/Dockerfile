@@ -3,13 +3,13 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
 # Copia todos os arquivos do projeto
-COPY . .
+COPY ../ .
 
 # Restaura as dependências
-RUN dotnet restore "./ScreenSound.sln"
+RUN dotnet restore "ScreenSound.sln"
 
 # Publica o projeto
-RUN dotnet publish "./ScreenSound.API/ScreenSound.API.csproj" -c Release -o /app/publish
+RUN dotnet publish "ScreenSound.API/ScreenSound.API.csproj" -c Release -o /app/publish
 
 # Etapa de runtime
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
