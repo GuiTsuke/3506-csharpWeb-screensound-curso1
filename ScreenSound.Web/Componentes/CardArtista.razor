@@ -1,4 +1,6 @@
-﻿<MudCard>
+﻿@inject NavigationManager NavigationManager
+
+<MudCard>
 	<MudCardMedia Image="@Imagem"></MudCardMedia>
 	<MudCardHeader>
 		<CardHeaderContent>
@@ -9,7 +11,7 @@
 		<MudText Typo="Typo.body2">@Artista!.Bio</MudText>
 	</MudCardContent>
 	<MudCardActions>
-		<MudButton Color="Color.Warning" Variant="Variant.Outlined" Href=@($"#/EditarArtista/{Artista!.Nome}")>Detalhes</MudButton>
+		<MudButton Color="Color.Warning" Variant="Variant.Outlined" OnClick="() => NavegarParaDetalhes(Artista!.Nome)">Detalhes</MudButton>
 	</MudCardActions>
 </MudCard>
 
@@ -17,10 +19,17 @@
 	[Parameter]
 	public ArtistaResponse? Artista { get; set; }
 
-	public string? Imagem{ get; set; }
+	public string? Imagem{ get; set; }	
+
+	private void NavegarParaDetalhes(string nome)
+	{
+		NavigationManager.NavigateTo($"/EditarArtista/{nome}");
+	}
 
 	protected override void OnParametersSet()
 	{
 		Imagem = Artista!.FotoPerfil!.Contains("Foto") ? $"{Constantes.ENDPOINT_API}{Artista!.FotoPerfil}" : "images/cardArista.png";
 	}
+
+
 }

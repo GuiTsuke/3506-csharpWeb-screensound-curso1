@@ -27,6 +27,9 @@ jobs:
     - name: Corrigir <base href> no index.html
       run: sed -i 's|<base href="/" />|<base href="/ScreenSound/" />|' build/wwwroot/index.html
 
+    - name: Copiar index.html como 404.html
+      run: cp build/wwwroot/index.html build/wwwroot/404.html
+
     - name: Substituir URL da API no appsettings.json
       run: |
         sed -i 's|https://three506-csharpweb-screensound-curso1.onrender.com|https://three506-csharpweb-screensound-curso1.onrender.com|g' build/wwwroot/appsettings.json
