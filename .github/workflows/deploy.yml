@@ -1,0 +1,35 @@
+name: Deploy Blazor WebAssembly to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v3
+
+    - name: Configurar .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restaurar pacotes
+      run: dotnet restore ScreenSound.Web/ScreenSound.Web.csproj
+
+    - name: Build projeto Blazor WebAssembly
+      run: dotnet publish ScreenSound.Web/ScreenSound.Web.csproj -c Release -o build
+
+    - name: Corrigir <base href> no index.html
+      run: sed -i 's|<base href="/" />|<base href="/ScreenSound/" />|' build/wwwroot/index.html
+
+    - name: Deploy para gh-pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: build/wwwroot
+        publish_branch: gh-pages
