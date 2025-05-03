@@ -6,16 +6,6 @@ using ScreenSound.Shared.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("PermitirFrontend", policy =>
-    {
-        policy.WithOrigins("https://localhost:7274")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
-});
-
 builder.Services.AddDbContext<ScreenSoundContext>((options) =>
 {
     options
@@ -36,10 +26,11 @@ app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
 
 app.UseCors(options =>
 {
-    options.AllowAnyOrigin()
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+    options.WithOrigins("https://guitsuke.github.io") // Substitua pelo seu domínio
+        .AllowAnyHeader()
+        .AllowAnyMethod();
 });
+
 
 app.UseStaticFiles();
 
