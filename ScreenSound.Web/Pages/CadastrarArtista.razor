@@ -46,12 +46,12 @@
 
 		var request = new ArtistaRequest(nome!, biografia!, fotoPerfil);
 		await artistaAPI.AddArtistaAsync(request);
-		navigationManager.NavigateTo("/Artistas");
+		navigationManager.NavigateTo("/ScreenSound/Artistas");
 	}
 
 	private void Voltar()
 	{
-		navigationManager.NavigateTo("/Artistas");
+		navigationManager.NavigateTo("/ScreenSound/Artistas");
 	}
 
 	private async Task UploadFile(IBrowserFile file)

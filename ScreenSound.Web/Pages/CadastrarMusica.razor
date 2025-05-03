@@ -87,11 +87,11 @@
 
 		var musicaRequest = new MusicaRequest(nome!, ArtistaDaMusica!.Id, anoLancamento!, generoRequests);
 		await musicaAPI.AddMusicaAsync(musicaRequest);
-		navigationManager.NavigateTo("/MusicasPorArtista");
+		navigationManager.NavigateTo("/ScreenSound/MusicasPorArtista");
 	}
 
 	private void Voltar()
 	{
-		navigationManager.NavigateTo("/MusicasPorArtista");
+		navigationManager.NavigateTo("/ScreenSound/MusicasPorArtista");
 	}
 }

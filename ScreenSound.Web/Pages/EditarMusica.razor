@@ -89,17 +89,17 @@
 
 		var musicaRequest = new MusicaRequestEdit(Musica!.Id, nome!, anoLancamento, ArtistaDaMusica!.Id, generoRequests);
 		await musicaAPI.UpdateMusicaAsync(musicaRequest);
-		navigationManager.NavigateTo("/MusicasPorArtista");
+		navigationManager.NavigateTo("/ScreenSound/MusicasPorArtista");
 	}
 
 	public async Task Deletar()
 	{		
 		await musicaAPI.DeleteMusicaAsync(Musica!.Id);
-		navigationManager.NavigateTo("/MusicasPorArtista");
+		navigationManager.NavigateTo("/ScreenSound/MusicasPorArtista");
 	}
 
 	private void Voltar()
 	{
-		navigationManager.NavigateTo("/MusicasPorArtista");
+		navigationManager.NavigateTo("/ScreenSound/MusicasPorArtista");
 	}
 }
