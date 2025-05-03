@@ -23,8 +23,10 @@
 
 	private void NavegarParaDetalhes(string nome)
 	{
-		NavigationManager.NavigateTo("/EditarArtista/" + nome);
+		var baseUri = NavigationManager.BaseUri; // ex: https://guitsuke.github.io/ScreenSound/
+		NavigationManager.NavigateTo($"{baseUri}EditarArtista/{nome}");
 	}
+
 
 	protected override void OnParametersSet()
 	{
