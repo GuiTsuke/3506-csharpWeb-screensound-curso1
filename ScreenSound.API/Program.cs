@@ -12,6 +12,17 @@ builder.Services.AddDbContext<ScreenSoundContext>((options) =>
     .UseNpgsql(builder.Configuration["ConnectionStrings:DefaultConnection"])
     .UseLazyLoadingProxies();
 });
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowGuitsuke", policy =>
+    {
+        policy.WithOrigins("https://guitsuke.github.io") // Substitua pelo seu domínio
+              .AllowAnyHeader() // Permite qualquer cabeçalho
+              .AllowAnyMethod(); // Permite qualquer método
+    });
+});
+
 builder.Services.AddTransient<DAL<Artista>>();
 builder.Services.AddTransient<DAL<Musica>>();
 builder.Services.AddTransient<DAL<Genero>>();
@@ -24,12 +35,7 @@ builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =
 var app = builder.Build();
 app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
 
-app.UseCors(options =>
-{
-    options.WithOrigins("https://guitsuke.github.io") // Substitua pelo seu domínio
-        .AllowAnyHeader()
-        .AllowAnyMethod();
-});
+app.UseCors("AllowGuitsuke");
 
 
 app.UseStaticFiles();
