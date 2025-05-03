@@ -33,18 +33,18 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options => options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 var app = builder.Build();
-app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
+
+app.UseStaticFiles();
 
 app.UseCors("AllowGuitsuke");
 
+app.UseSwagger();
+app.UseSwaggerUI();
 
-app.UseStaticFiles();
+app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
 
 app.AddEndpointsArtistas();
 app.AddEndpointsMusicas();
 app.AddEndpointsGeneros();
-
-app.UseSwagger();
-app.UseSwaggerUI();
 
 app.Run();
