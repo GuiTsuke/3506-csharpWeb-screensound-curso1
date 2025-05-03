@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "ScreenSound.Web",
   "resources": {
-    "hash": "sha256-V3fTmObFHvxf7D+M6eMe3qAIgx1GXrq3BT1dpTz3kjk=",
+    "hash": "sha256-H0q8HWTz+TATxySMwhF9dqtUoiqFi5QPEs1biDxZK9Q=",
     "fingerprinting": {
       "Microsoft.AspNetCore.Components.Forms.lmcfcyebxn.wasm": "Microsoft.AspNetCore.Components.Forms.wasm",
       "Microsoft.AspNetCore.Components.y28vd9895d.wasm": "Microsoft.AspNetCore.Components.wasm",
@@ -24,7 +24,7 @@
       "Microsoft.JSInterop.huodaddut7.wasm": "Microsoft.JSInterop.wasm",
       "Microsoft.JSInterop.WebAssembly.lsljofql11.wasm": "Microsoft.JSInterop.WebAssembly.wasm",
       "MudBlazor.9exp5yqmqz.wasm": "MudBlazor.wasm",
-      "ScreenSound.Web.e8cyjjijrd.wasm": "ScreenSound.Web.wasm",
+      "ScreenSound.Web.7beig2ijge.wasm": "ScreenSound.Web.wasm",
       "System.Collections.Concurrent.mzuhtezhia.wasm": "System.Collections.Concurrent.wasm",
       "System.Collections.Immutable.mc8ouz6i8g.wasm": "System.Collections.Immutable.wasm",
       "System.Collections.NonGeneric.6o2wb88be1.wasm": "System.Collections.NonGeneric.wasm",
@@ -100,7 +100,7 @@
       "Microsoft.JSInterop.huodaddut7.wasm": "sha256-Ca0MI/Gtb9BdRoj0uesn2b9CNZxiGE7YJS1dbyiuiic=",
       "Microsoft.JSInterop.WebAssembly.lsljofql11.wasm": "sha256-63bzxZLVvNOmTsso6iLrptxGmKBQh2HUIEGtPUrRPeQ=",
       "MudBlazor.9exp5yqmqz.wasm": "sha256-UYIzl9TitR5Uug+rdLHOz6NWs9tH/I0W+IyPnLVnWuU=",
-      "ScreenSound.Web.e8cyjjijrd.wasm": "sha256-ko7JfOX2+1rBg4MUGixwUcC6wpD10IwAQWOgXMmRR0Q=",
+      "ScreenSound.Web.7beig2ijge.wasm": "sha256-81ByBVKcBdQrBOls1Ib4K4PJ9iRUqxvQf6pWz1LYJ4g=",
       "System.Collections.Concurrent.mzuhtezhia.wasm": "sha256-3qPbmqWC9zuHedU6U8nNhVTcvRlP95Vnj47UDrVK/wE=",
       "System.Collections.Immutable.mc8ouz6i8g.wasm": "sha256-RmrZ19PJ8hJNoGWPW0DBgDCBxgNNYoBPo18Mb5k/LPE=",
       "System.Collections.NonGeneric.6o2wb88be1.wasm": "sha256-hiCNLBMli9ZrBjl0l9NVvcXG36xkGJF/znLqDS6yYxs=",
